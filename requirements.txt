@@ -1,0 +1,5 @@
+openai
+pinecone-client
+python-dotenv
+requests
+tenacity
