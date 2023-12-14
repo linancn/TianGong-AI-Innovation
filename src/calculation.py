@@ -71,7 +71,7 @@ def select_from_db(_engine, query):
     return df
 
 
-query = "SELECT uuid FROM journals WHERE journal = 'RESOURCES, CONSERVATION AND RECYCLING' AND embedding_time IS NOT NULL AND authors IS NOT NULL LIMIT 100"
+query = "SELECT uuid FROM journals WHERE journal = 'RESOURCES, CONSERVATION AND RECYCLING' AND embedding_time IS NOT NULL AND authors IS NOT NULL"
 
 engine = create_engine_pg()
 

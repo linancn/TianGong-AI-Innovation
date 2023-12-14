@@ -53,3 +53,9 @@ git tag v0.0.1
 #push this tag to origin
 git push origin v0.0.1
 ```
+
+### RUN
+
+```bash
+nohup .venv/bin/python3.11 src/calculation.py > /dev/null 2>&1 &
+```
