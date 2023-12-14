@@ -1,12 +1,15 @@
+import os
+
 import pandas as pd
+from sqlalchemy import create_engine, text
 
 df = pd.read_csv("data/result.csv", header=None)
 
-df["UUID"] = df[0].apply(lambda x: x.split("_")[0])
+df["uuid"] = df[0].apply(lambda x: x.split("_")[0])
 
 numeric_cols = df.select_dtypes(include=[float]).columns
 
-grouped_df = df.groupby("UUID")[numeric_cols].mean().reset_index()
+grouped_df = df.groupby("uuid")[numeric_cols].mean().reset_index()
 
 # grouped_df_t = grouped_df.transpose()
 grouped_df["Sum"] = df.iloc[:, 1:32].sum(axis=1)
@@ -25,11 +28,28 @@ grouped_df["Quantile_75"] = df.iloc[:, 1:32].quantile(q=0.75, axis=1)
 grouped_df["Quantile_90"] = df.iloc[:, 1:32].quantile(q=0.9, axis=1)
 
 
+def create_engine_pg():
+    engine = create_engine(
+        os.environ["DATABASE_URL"],
+    )
+    return engine
 
-grouped_df.to_csv("data/final.csv")
+
+def select_from_db(_engine, query):
+    with _engine.begin() as conn:
+        df = pd.read_sql_query(sql=text(query), con=conn)
+    return df
 
 
-# df_remove_head_tail = df.drop(df.columns[[1, -1]], axis=1)
+query = "SELECT uuid, doi, title, journal, authors, date FROM journals WHERE journal = 'RESOURCES, CONSERVATION AND RECYCLING' AND embedding_time IS NOT NULL AND authors IS NOT NULL"
 
+engine = create_engine_pg()
 
-# print(df_remove_head_tail)
+df_db = select_from_db(engine, query)
+
+df_db["uuid"] = df_db["uuid"].astype(str)
+grouped_df["uuid"] = grouped_df["uuid"].astype(str)
+
+merged_df = df_db.merge(grouped_df, on="uuid", how="inner")
+
+merged_df.to_excel("data/final.xlsx")
