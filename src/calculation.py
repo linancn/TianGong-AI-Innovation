@@ -4,8 +4,8 @@ import os
 import pandas as pd
 import pinecone
 from dotenv import load_dotenv
-from tenacity import retry, stop_after_attempt, wait_fixed
 from sqlalchemy import create_engine, text
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 load_dotenv()
 
@@ -14,6 +14,7 @@ pinecone.init(
     environment=os.environ["PINECONE_ENVIRONMENT"],
 )
 index = pinecone.Index(os.environ["PINECONE_INDEX"])
+
 
 @retry(stop=stop_after_attempt(30), wait=wait_fixed(1))
 def innovation_assessment(id: str) -> dict:
