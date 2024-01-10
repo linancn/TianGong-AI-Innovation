@@ -58,4 +58,10 @@ git push origin v0.0.1
 
 ```bash
 nohup .venv/bin/python3.11 src/calculation.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/calculation_0.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/calculation_1.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/calculation_2.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/calculation_3.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/calculation_4.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/calculation_5.py > /dev/null 2>&1 &
 ```

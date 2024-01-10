@@ -16,11 +16,28 @@ pinecone.init(
 index = pinecone.Index(os.environ["PINECONE_INDEX"])
 
 
+def create_engine_pg():
+    engine = create_engine(
+        os.environ["DATABASE_URL"],
+    )
+    return engine
+
+
+def select_from_db(_engine, query):
+    with _engine.begin() as conn:
+        df = pd.read_sql_query(sql=text(query), con=conn)
+    return df
+
+
+engine = create_engine_pg()
+t = text("UPDATE journals SET cal_time = now() WHERE uuid=:uuid")
+
+
 @retry(stop=stop_after_attempt(30), wait=wait_fixed(1))
 def innovation_assessment(id: str) -> dict:
     """Get results for a detaied innovation assessment from upload files"""
 
-    id_list = [f"{id}_{i}" for i in range(101)]
+    id_list = [f"{id}_{i}" for i in range(151)]
     fetch_response = index.fetch(ids=id_list)
 
     docs = []
@@ -33,7 +50,7 @@ def innovation_assessment(id: str) -> dict:
             }
         )
 
-    with open(f"data/result.csv", mode="a+", newline="", encoding="utf-8") as file:
+    with open(f"data/result_5.csv", mode="a+", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         for doc in docs:
             query_response = index.query(
@@ -55,29 +72,16 @@ def innovation_assessment(id: str) -> dict:
                 }
                 for match in query_response["matches"]
             ]
-            scores_list = [doc["id"]] + [item["score"] for item in result]
+            scores_list = [doc["id"]] + [[item["id"], item["score"]] for item in result]
             writer.writerow(scores_list)
 
-
-def create_engine_pg():
-    engine = create_engine(
-        os.environ["DATABASE_URL"],
-    )
-    return engine
+    with engine.connect() as connection:
+        connection.execute(t, {"uuid": id})
+        connection.commit()
 
 
-def select_from_db(_engine, query):
-    with _engine.begin() as conn:
-        df = pd.read_sql_query(sql=text(query), con=conn)
-    return df
+query = "WITH ranked_articels AS (SELECT row_number() OVER (ORDER BY uuid) as row_num, uuid FROM journals WHERE (embedding_time IS NOT NULL AND authors IS NOT NULL)) SELECT row_num, uuid FROM ranked_articels WHERE row_num BETWEEN 500001 AND 600037"
 
-
-query = "SELECT uuid FROM journals WHERE embedding_time IS NOT NULL AND authors IS NOT NULL"
-
-# query = "WITH ranked_articels AS (SELECT row_number() OVER (ORDER BY uuid) as row_num, uuid FROM journals WHERE (embedding_time IS NOT NULL AND authors IS NOT NULL)) SELECT row_num, uuid FROM ranked_articels WHERE row_num BETWEEN 1 AND 10"
-
-
-engine = create_engine_pg()
 
 df = select_from_db(engine, query)
 
