@@ -1,5 +1,6 @@
 import ast
 import os
+import time
 
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -9,6 +10,8 @@ def extract_number(s):
     lst = ast.literal_eval(s)
     return lst[1]
 
+
+start_time = time.time()
 
 # df = pd.read_csv("data/concatenated.csv", header=None, nrows=2)
 df = pd.read_csv("data/concatenated.csv", header=None)
@@ -42,6 +45,10 @@ grouped_df["Quantile_75"] = grouped_df.iloc[:, 1:33].quantile(q=0.75, axis=1)
 grouped_df["Quantile_90"] = grouped_df.iloc[:, 1:33].quantile(q=0.9, axis=1)
 
 grouped_df.to_excel("data/all.xlsx")
+
+end_time = time.time()
+
+print(f"Execution time: {end_time - start_time} seconds")
 
 # def create_engine_pg():
 #     engine = create_engine(
