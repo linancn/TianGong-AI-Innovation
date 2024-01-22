@@ -10,10 +10,12 @@ with open(output_file, "w") as outfile:
         file_path = os.path.join(input_dir, file)
         try:
             with open(file_path) as infile:
-                while True:
-                    chunk = infile.read(1024 * 1024 * 512)
-                    if not chunk:
-                        break
-                    outfile.write(chunk)
+                content = infile.read()
+                outfile.write(content)
+                # while True:
+                #     chunk = infile.read(1024 * 1024 * 512)
+                #     if not chunk:
+                #         break
+                #     outfile.write(chunk)
         except:
             print(f"Error reading {file_path}")
