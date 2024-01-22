@@ -2,6 +2,7 @@ openpyxl
 pandas
 pinecone-client
 psycopg2-binary
+Pyarrow
 python-dotenv
 sqlalchemy
 tenacity
