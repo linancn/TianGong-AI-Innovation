@@ -67,5 +67,9 @@ nohup .venv/bin/python3.11 src/calculation_5.py > /dev/null 2>&1 &
 
 nohup .venv/bin/python3.11 src/analysis_all.py > log.txt 2>&1 &
 
-nohup .venv/bin/python3.11 src/analysis_large.py > log_large.txt 2>&1 &
+nohup .venv/bin/python3.11 src/analysis_large_remove_refs_id.py > log_large.txt 2>&1 &
+nohup .venv/bin/python3.11 src/analysis_large_all.py > log_large_all.txt 2>&1 &
+
+
+sudo pkill -f python3.11
 ```
