@@ -66,4 +66,6 @@ nohup .venv/bin/python3.11 src/calculation_4.py > /dev/null 2>&1 &
 nohup .venv/bin/python3.11 src/calculation_5.py > /dev/null 2>&1 &
 
 nohup .venv/bin/python3.11 src/analysis_all.py > log.txt 2>&1 &
+
+nohup .venv/bin/python3.11 src/analysis_large.py > log_large.txt 2>&1 &
 ```
