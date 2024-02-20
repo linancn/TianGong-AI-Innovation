@@ -18,8 +18,8 @@ def parallelize_dataframe(df, func, n_cores):
 
 
 def extract_number(s):
-    lst = ast.literal_eval(s)
-    return lst[1]
+    float_s = float(s)
+    return float_s
 
 
 def uuid_split(data):
