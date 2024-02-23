@@ -33,6 +33,9 @@ sudo apt install poppler-utils
 sudo apt install tesseract-ocr
 sudo apt install libreoffice
 sudo apt install pandoc
+
+sudo apt update
+sudo apt install python3-tk
 ```
 
 Install Cuda (optional):
