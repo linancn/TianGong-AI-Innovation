@@ -48,12 +48,17 @@ def sort_df(data):
     return data
 
 def compute_mean(data):
-    data["Mean"] = data.iloc[:, 1:13].mean(axis=1)
+    data["mean"] = data.iloc[:, 1:13].mean(axis=1)
+    return data
+
+def compute_departe(data):
+    data["departe"] = data["mean"] - chunk_overall_mean
     return data
 
 start_time = time.time()
 
-df = pd.read_csv("data/output.csv", header=None, usecols=range(13))
+# df = pd.read_csv("data/output.csv", header=None, usecols=range(13))
+df = pd.read_csv("data/output.csv", header=None, usecols=range(13), nrows=2000)
 df['review_or_not'] = np.nan
 print("Data loaded")
 
@@ -74,8 +79,21 @@ print("chunkid converted to int")
 df=parallelize_dataframe(df, sort_df, n_cores)
 print("Data sorted")
 
+df = parallelize_dataframe(df, compute_mean, n_cores)
+print("Mean calculated")
+
+#calculate the mean of all chunks
+chunk_overall_mean = df["mean"].mean()
+print(chunk_overall_mean)
+
+df= parallelize_dataframe(df, compute_departe, n_cores)
+print("Departe computed")
+
+print(df.head(3))
+
+df.iloc[:, -5:].to_csv("12_class_sort.csv")
+print("Data saved")
+
 end_time = time.time()
 print("Time taken: ", end_time - start_time)
 
-df.to_csv("data/12_class_sort.csv")
-print("Data saved")
