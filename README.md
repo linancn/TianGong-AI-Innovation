@@ -33,9 +33,6 @@ sudo apt install poppler-utils
 sudo apt install tesseract-ocr
 sudo apt install libreoffice
 sudo apt install pandoc
-
-sudo apt update
-sudo apt install python3-tk
 ```
 
 Install Cuda (optional):
@@ -61,12 +58,20 @@ git push origin v0.0.1
 
 ```bash
 nohup .venv/bin/python3.11 src/calculation.py > /dev/null 2>&1 &
+
 nohup .venv/bin/python3.11 src/calculation_0.py > /dev/null 2>&1 &
 nohup .venv/bin/python3.11 src/calculation_1.py > /dev/null 2>&1 &
 nohup .venv/bin/python3.11 src/calculation_2.py > /dev/null 2>&1 &
 nohup .venv/bin/python3.11 src/calculation_3.py > /dev/null 2>&1 &
 nohup .venv/bin/python3.11 src/calculation_4.py > /dev/null 2>&1 &
 nohup .venv/bin/python3.11 src/calculation_5.py > /dev/null 2>&1 &
+
+nohup .venv/bin/python3.11 src/back_calculation_0.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/back_calculation_1.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/back_calculation_2.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/back_calculation_3.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/back_calculation_4.py > /dev/null 2>&1 &
+nohup .venv/bin/python3.11 src/back_calculation_5.py > /dev/null 2>&1 &
 
 nohup .venv/bin/python3.11 src/analysis_all.py > log.txt 2>&1 &
 
