@@ -7,8 +7,7 @@
 
 [Tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial)
 
-Python 3 -> Additional Options -> 3.11-bullseye -> ZSH Plugins (Last One) -> Trust @devcontainers-contrib -> Keep Default
-
+Python 3 -> Additional Options -> 3.11-bullseye -> ZSH Plugins (Last One) -> Trust @devcontainers-contrib -> Keep Defaults
 Setup `venv`:
 
 ```bash
