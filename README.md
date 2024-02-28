@@ -8,10 +8,32 @@
 [Tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial)
 
 Python 3 -> Additional Options -> 3.11-bullseye -> ZSH Plugins (Last One) -> Trust @devcontainers-contrib -> Keep Defaults
+Setup `venv`:
+
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+```
+### Using VSCode WSL2: Ubuntu 22.04.3 LTS
+
+Tutorial
+
+Install Ubuntu 22.04.3 LTS -> Update Ubuntu Packages -> Install `Python 3.11` -> Open Project in WSL2 Using VSCode
+
+Install `Python 3.11`   
+
+```bash
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.11
+sudo apt install python3.11-dev
+```
 
 Setup `venv`:
 
 ```bash
+sudo apt install python3.11-venv
 python3.11 -m venv .venv
 source .venv/bin/activate
 ```
@@ -22,17 +44,14 @@ Install requirements:
 pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install -r requirements.txt --upgrade
-
 pip freeze > requirements_freeze.txt
 ```
 
+Install GUI (Graphical User Interface) toolkit (optional)
+
 ```bash
-sudo apt install python3.11-dev
-sudo apt install libmagic-dev
-sudo apt install poppler-utils
-sudo apt install tesseract-ocr
-sudo apt install libreoffice
-sudo apt install pandoc
+sudo apt update 
+sudo apt install python3-tk
 ```
 
 Install Cuda (optional):
